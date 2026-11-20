@@ -31,7 +31,7 @@ export default function Header({ menus = [], badges = {} }) {
   }
 
   return (
-    <header className="sticky top-0 z-40 bg-navy text-navy-foreground">
+    <header className="sticky top-0 z-40 bg-navy text-navy-foreground print:hidden">
       <div className="flex w-full items-center gap-4 px-4 py-3 sm:px-6">
         <NavLink to="/home" className="shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
           <BrandMark small hideNameOnMobile />

@@ -43,8 +43,15 @@ export default function ChatList({ chats, selectedId, onSelect }) {
           const person = chat.participants[0]
           const active = chat._id === selectedId
           const openTasks = chat.tasks.filter((t) => !t.done).length
-          const preview =
-            last?.type === "file" ? `📎 ${last.text}` : last?.sender === "client" ? `You: ${last.text}` : last?.text || ""
+          const preview = !last
+            ? ""
+            : last.deleted
+              ? "🚫 This message was deleted"
+              : last.type === "file"
+                ? `📎 ${last.text}`
+                : last.sender === "client"
+                  ? `You: ${last.text}`
+                  : last.text
 
           return (
             <li key={chat._id}>

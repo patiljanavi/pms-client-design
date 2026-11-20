@@ -27,7 +27,7 @@ export function chatsToTodos(chats = []) {
         chatId: chat._id,
         title: chat.unread ? `Reply to ${firstName}: “${chat.subject}”` : `Finish tasks in “${chat.subject}”`,
         detail: parts.join(" · "),
-        preview: chat.unread && last && last.sender !== "client" ? (last.type === "file" ? `📎 ${last.text}` : last.text) : null,
+        preview: chat.unread && last && last.sender !== "client" && !last.deleted ? (last.type === "file" ? `📎 ${last.text}` : last.text) : null,
         dueDate: nextDue,
         unread: chat.unread || 0,
         actionLabel: chat.unread ? "Reply" : "Open chat",

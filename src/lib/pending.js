@@ -1,4 +1,5 @@
 import { chatsToTodos } from "./chatTodos"
+import { pendingDocActions } from "./folderTree"
 
 /**
  * Everything waiting on the client, grouped by category.
@@ -26,6 +27,7 @@ export function getMenuBadges(data) {
     "/billing": p.invoices.length,
     "/proposalsels": p.proposals.length,
     "/organizers": p.organizers.length,
-    "/document": p.documents.length,
+    // requested uploads + files waiting for approval or signature
+    "/document": p.documents.length + pendingDocActions(data.folders || []).length,
   }
 }

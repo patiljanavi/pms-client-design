@@ -5,6 +5,9 @@
  *                 "firm"   (Harbor staff, shown on the left in white)
  *                 "system" (activity like a completed task, shown in the middle)
  * message.type:   "text" | "file" | "task"
+ * Optional: replyTo { _id, senderName, text, type } — the message being answered
+ *           reactions { "👍": ["Ava Thompson"] } — emoji → people who reacted
+ *           edited: true, deleted: true
  */
 export const clientChats = [
   {
@@ -20,7 +23,17 @@ export const clientChats = [
     messages: [
       { _id: "m-1", sender: "firm", senderName: "Ava Thompson", type: "text", text: "Hi Grace, I’m reconciling Q3 and a few receipts are missing.", sentAt: "2026-11-14T10:02:00" },
       { _id: "m-2", sender: "firm", senderName: "Ava Thompson", type: "text", text: "I’ve added them as tasks on the right. Could you upload them when you get a chance?", sentAt: "2026-11-14T10:03:00" },
-      { _id: "m-3", sender: "client", senderName: "Grace Okafor", type: "text", text: "Sure — I’ll dig them out this weekend.", sentAt: "2026-11-14T12:41:00", read: true },
+      {
+        _id: "m-3",
+        sender: "client",
+        senderName: "Grace Okafor",
+        type: "text",
+        text: "Sure — I’ll dig them out this weekend.",
+        sentAt: "2026-11-14T12:41:00",
+        read: true,
+        replyTo: { _id: "m-2", senderName: "Ava Thompson", type: "text", text: "I’ve added them as tasks on the right. Could you upload them when you get a chance?" },
+        reactions: { "🙏": ["Ava Thompson"] },
+      },
       { _id: "m-4", sender: "firm", senderName: "Ava Thompson", type: "text", text: "Thank you! The Amazon one is just a yes/no — was it for the office?", sentAt: "2026-11-16T09:15:00" },
       { _id: "m-5", sender: "firm", senderName: "Ava Thompson", type: "file", text: "Q3-missing-receipts.pdf", fileSize: "84 KB", sentAt: "2026-11-16T09:16:00" },
     ],
@@ -54,7 +67,7 @@ export const clientChats = [
       { _id: "m-9", sender: "firm", senderName: "Ava Thompson", type: "text", text: "To start payroll we need two things from you — they’re in the task list.", sentAt: "2026-10-12T11:00:00" },
       { _id: "m-10", sender: "system", type: "task", text: "Grace Okafor completed the task “Share the payroll provider login invite”", sentAt: "2026-10-14T09:30:00" },
       { _id: "m-11", sender: "system", type: "task", text: "Grace Okafor completed the task “Sign payroll authorization (Form 8655)”", sentAt: "2026-10-15T14:12:00" },
-      { _id: "m-12", sender: "firm", senderName: "Ava Thompson", type: "text", text: "Thanks for signing the authorization — we’re all set.", sentAt: "2026-10-15T14:40:00" },
+      { _id: "m-12", sender: "firm", senderName: "Ava Thompson", type: "text", text: "Thanks for signing the authorization — we’re all set.", sentAt: "2026-10-15T14:40:00", reactions: { "👍": ["Grace Okafor"], "❤️": ["Grace Okafor"] } },
     ],
   },
   {

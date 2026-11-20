@@ -36,3 +36,19 @@ export function SectionHeading({ title, description, action }) {
     </div>
   )
 }
+
+/** Centered empty message with an icon and optional actions. */
+export function EmptyState({ icon: Icon, title, description, action }) {
+  return (
+    <div className="flex flex-col items-center gap-2 px-6 py-12 text-center">
+      {Icon && (
+        <span className="mb-1 inline-flex h-11 w-11 items-center justify-center rounded-xl border bg-card text-muted-foreground shadow-card" aria-hidden="true">
+          <Icon className="h-5 w-5" />
+        </span>
+      )}
+      <p className="font-semibold">{title}</p>
+      {description && <p className="max-w-sm text-sm text-muted-foreground">{description}</p>}
+      {action && <div className="mt-2 flex flex-wrap justify-center gap-2">{action}</div>}
+    </div>
+  )
+}

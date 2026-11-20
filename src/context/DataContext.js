@@ -9,7 +9,7 @@ import { clientOrganizers } from "../data/clientOrganizers"
 import { clientProposals } from "../data/clientProposals"
 import { clientInvoices } from "../data/clientInvoices"
 import { notificationSettings } from "../data/notificationSettings"
-
+import { clientFolders } from "../data/clientFolders"
 const DataContext = createContext(null)
 
 /** Dummy data, keyed the same way as the API endpoints below. */
@@ -18,11 +18,13 @@ const dummy = {
   accountant: assignedAccountant,
   recentlyCompleted,
   documents: clientDocuments,
+  folders: clientFolders,  
   chats: clientChats,
   organizers: clientOrganizers,
   proposals: clientProposals,
   invoices: clientInvoices,
   notificationSettings,
+
 }
 
 /**
@@ -59,7 +61,28 @@ export function DataProvider({ children }) {
     []
   )
 
-  const value = useMemo(() => ({ ...data, setChats, loading, error }), [data, setChats, loading, error])
+ /** Update organizers (answers saved as you go, submitting). Value or updater function. */
+  const setOrganizers = useCallback(
+    (next) => setData((d) => ({ ...d, organizers: typeof next === "function" ? next(d.organizers || []) : next })),
+    []
+  )
+ /** Update proposals (signing). Value or updater function. */
+  const setProposals = useCallback(
+    (next) => setData((d) => ({ ...d, proposals: typeof next === "function" ? next(d.proposals || []) : next })),
+    []
+  )
+const setFolders = useCallback(
+  (next) => setData((d) => ({ ...d, folders: typeof next === "function" ? next(d.folders || []) : next })),
+  []
+)
+
+const setDocuments = useCallback(
+  (next) => setData((d) => ({ ...d, documents: typeof next === "function" ? next(d.documents || []) : next })),
+  []
+)
+
+
+  const value = useMemo(() => ({ ...data, setChats,setOrganizers,setProposals, setFolders, setDocuments,loading, error }), [data, setChats,setOrganizers,setProposals, setFolders, setDocuments,loading, error])
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
 }
 

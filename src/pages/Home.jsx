@@ -9,7 +9,9 @@ import { useAuth } from "../context/AuthContext"
 import { useData } from "../context/DataContext"
 import { chatLink } from "../lib/chatTodos"
 import { formatDate, isDueThisWeek, relativeDue } from "../lib/dates"
+import { firstUnanswered, organizerResumeLink, slotSectionTitle } from "../lib/organizer"
 import { getPending } from "../lib/pending"
+import { proposalActionLink } from "../lib/proposal"
 import { cn, formatMoney } from "../lib/utils"
 
 /** Icon + colour for each category (summary cards and section headers). */
@@ -192,14 +194,14 @@ export default function Home() {
                   meta={
                     <>
                       {p.type}
-                      {p.amount != null && ` · ${formatMoney(p.amount)} / year`}
+                      {p.amount > 0 && ` · ${formatMoney(p.amount)} total`}
                       {p.dueDate && " · "}
                       <DueText date={p.dueDate} />
                     </>
                   }
                 />
                 <Button asChild size="sm">
-                  <Link to="/proposalsels">Review & sign</Link>
+                  <Link to={proposalActionLink(p)}>Review & sign</Link>
                 </Button>
               </Row>
             ))}
@@ -216,12 +218,15 @@ export default function Home() {
                       <Progress value={(o.answered / o.total) * 100} className="max-w-[200px]" aria-label={`${o.name} progress`} />
                       <span>
                         {o.answered} of {o.total} questions · <DueText date={o.dueDate} />
+                        {o.sections && firstUnanswered(o) && (
+                          <span className="block">Next: {slotSectionTitle(firstUnanswered(o))}</span>
+                        )}
                       </span>
                     </span>
                   }
                 />
                 <Button asChild variant="outline" size="sm">
-                  <Link to="/organizers">{o.answered ? "Continue" : "Start"}</Link>
+                  <Link to={organizerResumeLink(o._id)}>{o.answered ? "Continue" : "Start"}</Link>
                 </Button>
               </Row>
             ))}
